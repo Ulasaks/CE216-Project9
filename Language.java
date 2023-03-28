@@ -21,7 +21,7 @@ public class Language {
         this.code = code;
         this.charSet = charSet;
         this.dictionary = new HashMap<String, String>();
-        this.word=new Word();
+        this.word = new Word();
     }
 
     public String getName() {
