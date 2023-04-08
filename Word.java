@@ -68,4 +68,9 @@ public class Word {
         if (this.newLanguage.containsKey(name))
             System.out.println(newLanguage);
     }
+
+    public void findWord(String name){
+        if (getName().contains(name))
+            System.out.println(getName());
+    }
 }
