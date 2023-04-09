@@ -26,5 +26,21 @@ public class Dictionary {
         String translation = dict.get(input);
         System.out.println("Translation of " + input + ": " + translation);
 
+        Scanner sc=new Scanner(System.in);
+        Translation translation1= new Translation();
+        System.out.println("Welcome to dictionary ...");
+
+
+        System.out.println("Enter a source Language:");
+        String language1 = sc.nextLine();
+        System.out.println("Enter a target language");
+        String language2 = sc.nextLine();
+        System.out.println("Enter a word");
+        String word = sc.nextLine();
+        translation1.translate(word,language1,language2);
+
     }
+
+
+
 }
