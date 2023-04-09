@@ -11,6 +11,8 @@ public class Translation {
     private String[] languages;
     private String basePath;
 
+    public Translation(){}
+
     public Translation(String[] languages, String basePath) {
         this.languages = languages;
         this.basePath = basePath;
@@ -58,7 +60,7 @@ public class Translation {
         this.toLanguage = toLanguage;
     }
 
-    private void loadDictionaries() {
+    public void loadDictionaries() {
         for (String language : languages) {
             String filePath = basePath + File.separator + language + ".txt";
             try {
@@ -81,7 +83,7 @@ public class Translation {
         }
     }
 
-     public List<String> translate(String word, String fromLanguage, String toLanguage) {
+    public List<String> translate(String word, String fromLanguage, String toLanguage) {
         if (!data.containsKey(fromLanguage) || !data.containsKey(toLanguage)) {
             return new ArrayList<>();
         }

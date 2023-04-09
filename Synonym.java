@@ -3,6 +3,8 @@ public class Synonym {
     private Map<String, Map<String, List<String>>> data;
     private String basePath;
 
+    public Synonym(){}
+
     public Synonym(String basePath,Map<String, Map<String, List<String>>> data) {
         this.basePath = basePath;
         this.data = data;

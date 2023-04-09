@@ -8,8 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Dictionary {
-    public static void main(String[] args){
 
+    public static void main(String[] args){
+        Translation translation=new Translation();
+        Word word=new Word();
+        Synonym synonym=new Synonym();
+
+        translation.loadDictionaries();
     }
 
 
