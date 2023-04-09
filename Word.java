@@ -5,7 +5,13 @@ public class Word {
     private HashMap<String, String> Dictionary;
     private HashMap<String, String> newLanguage;
 
-    Language language=new Language();
+    private Map<String, Map<String, List<String>>> data;
+    private String[] languages;
+    private String basePath;
+
+
+    Word word=new Word();
+
 
     public void setName(String name) {
         this.name = name;
@@ -53,20 +59,35 @@ public class Word {
         setNewLanguage(getNewLanguage());
     }
 
-    public void createWord(String name, String language){
-        this.newLanguage.put(name, language);
-    }
-
-    public void editWord(String oldName, String name, String language){
-        if (this.newLanguage.containsKey(oldName)){
-            this.newLanguage.remove(oldName);
-            this.newLanguage.put(name, language);
+    public void addWord(String word, String translation, String language) {
+        if (!data.containsKey(language)) {
+            data.put(language, new HashMap<>());
+        }
+        Map<String, List<String>> wordMap = data.get(language);
+        if (!wordMap.containsKey(word)) {
+            wordMap.put(word, new ArrayList<>());
+        }
+        List<String> translationList = wordMap.get(word);
+        if (!translationList.contains(translation)) {
+            translationList.add(translation);
         }
     }
 
-    public void findLanguage(String name){
-        if (this.newLanguage.containsKey(name))
-            System.out.println(newLanguage);
+    public void editWord(String oldWord, String newWord, String language) {
+        if (!data.containsKey(language)) {
+            return;
+        }
+        Map<String, List<String>> wordMap = data.get(language);
+        if (!wordMap.containsKey(oldWord)) {
+            return;
+        }
+        List<String> translations = wordMap.remove(oldWord);
+        wordMap.put(newWord, translations);
+    }
+    public void deleteWord(String word) {
+        if (this.getDictionary().containsKey(word)) {
+            this.getDictionary().remove(word);
+        }
     }
 
     public void findWord(String name){

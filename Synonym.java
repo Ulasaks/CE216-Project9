@@ -1,36 +1,40 @@
 import java.util.*;
 public class Synonym {
-    private String word;
-    private Language language;
-    private List<String> synonyms;
+    private Map<String, Map<String, List<String>>> data;
+    private String basePath;
 
-    public Synonym(String word, Language language, List<String> synonyms) {
-        this.word = word;
-        this.language = language;
-        this.synonyms = synonyms;
+    public Synonym(String basePath,Map<String, Map<String, List<String>>> data) {
+        this.basePath = basePath;
+        this.data = data;
+
     }
 
-    public String getWord() {
-        return word;
+    public String getBasePath() {
+        return basePath;
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    public void setBasePath(String basePath) {
+        this.basePath = basePath;
     }
 
-    public Language getLanguage() {
-        return language;
+    public Map<String, Map<String, List<String>>> getData() {
+        return data;
     }
 
-    public void setLanguage(Language language) {
-        this.language = language;
+    public void setData(Map<String, Map<String, List<String>>> data) {
+        this.data = data;
     }
-
-    public List<String> getSynonyms() {
+    public List<String> getSynonyms(String word, String language) {
+        if (!data.containsKey(language)) {
+            return new ArrayList<>();
+        }
+        Map<String, List<String>> wordMap = data.get(language);
+        List<String> synonyms = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : wordMap.entrySet()) {
+            if (entry.getValue().contains(word) && !entry.getKey().equals(word)) {
+                synonyms.add(entry.getKey());
+            }
+        }
         return synonyms;
-    }
-
-    public void setSynonyms(List<String> synonyms) {
-        this.synonyms = synonyms;
     }
 }
