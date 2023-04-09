@@ -4,8 +4,10 @@ public class Dictionary {
         Translation translation=new Translation();
         Word word=new Word();
         Synonym synonym=new Synonym();
-
+        
         translation.loadDictionaries();
+
+
     }
 
 
