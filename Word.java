@@ -10,9 +10,6 @@ public class Word {
     private String basePath;
 
 
-    Word word=new Word();
-
-
     public void setName(String name) {
         this.name = name;
     }
