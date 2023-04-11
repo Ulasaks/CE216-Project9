@@ -1,0 +1,68 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class GUI {
+    private JFrame frame;
+    private JPanel panel;
+    private JTextArea inputTextArea;
+    private JTextArea outputTextArea;
+    private JButton translateButton;
+    private JButton clearButton;
+    private JComboBox<String> languageComboBox;
+
+    public GUI() {
+        frame = new JFrame("Translator");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        // Create input text area
+        inputTextArea = new JTextArea(10, 50);
+        JScrollPane inputScrollPane = new JScrollPane(inputTextArea);
+        panel.add(inputScrollPane, BorderLayout.NORTH);
+
+        // Create output text area
+        outputTextArea = new JTextArea(10, 50);
+        JScrollPane outputScrollPane = new JScrollPane(outputTextArea);
+        panel.add(outputScrollPane, BorderLayout.CENTER);
+
+        // Create translate button
+        translateButton = new JButton("Translate");
+        translateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String input = inputTextArea.getText();
+                String language = (String) languageComboBox.getSelectedItem();
+                String output = Translator.translate(input, language);
+                outputTextArea.setText(output);
+            }
+        });
+
+        // Create clear button
+        clearButton = new JButton("Clear");
+        clearButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inputTextArea.setText("");
+                outputTextArea.setText("");
+            }
+        });
+
+        // Create language combo box
+        languageComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French", "German", "Italian", "Russian"});
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(translateButton);
+        buttonPanel.add(clearButton);
+        buttonPanel.add(languageComboBox);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        frame.getContentPane().add(panel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new GUI();
+    }
+}
