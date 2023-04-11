@@ -95,4 +95,40 @@ public class GUI extends Application {
         Label translationLabel = new Label("Translation:");
         TextField translationTextField = new TextField();
 
-        // Create the
+           // Create the add word dialog grid pane and add the labels and text fields
+    GridPane addWordGridPane = new GridPane();
+    addWordGridPane.setHgap(10);
+    addWordGridPane.setVgap(10);
+    addWordGridPane.setPadding(new Insets(10));
+    addWordGridPane.add(spellingLabel, 0, 0);
+    addWordGridPane.add(spellingTextField, 1, 0);
+    addWordGridPane.add(languageLabel, 0, 1);
+    addWordGridPane.add(languageChoiceBox, 1, 1);
+    addWordGridPane.add(translationLabel, 0, 2);
+    addWordGridPane.add(translationTextField, 1, 2);
+
+    // Disable the add button until all fields are filled in
+    Node addButtonNode = addWordDialog.getDialogPane().lookupButton(addButton);
+    addButtonNode.setDisable(true);
+    spellingTextField.textProperty().addListener((observable, oldValue, newValue) -> addButtonNode.setDisable(newValue.trim().isEmpty() || translationTextField.getText().trim().isEmpty()));
+
+    // Set the add word dialog content
+    addWordDialog.getDialogPane().setContent(addWordGridPane);
+
+    // Request focus on the spelling text field when the dialog is shown
+    Platform.runLater(spellingTextField::requestFocus);
+
+    // Convert the result to a Word object when the add button is clicked
+    addWordDialog.setResultConverter(dialogButton -> {
+        if (dialogButton == addButton) {
+            Word word = new Word(spellingTextField.getText(), new Translation(languageChoiceBox.getValue(), translationTextField.getText()));
+            dictionary.addWord(word);
+            return word;
+        }
+        return null;
+    });
+
+    // Show the add word dialog
+    addWordDialog.showAndWait();
+}
+}
