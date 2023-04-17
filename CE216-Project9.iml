@@ -7,5 +7,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/javafx-sdk1.3" />
+        </SOURCES>
+        <jarDirectory url="file://C:/javafx-sdk1.3" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>

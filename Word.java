@@ -1,94 +1,75 @@
 import java.util.*;
 
 public class Word {
-    private String name, code;
-    private HashMap<String, String> Dictionary;
-    private HashMap<String, String> newLanguage;
+    private String name;
+    private String code;
+    private Map<String, String> dictionary;
+    private Map<String, String> newLanguage;
+    private Map<String, Map<String, List<String>>> translations;
 
-    private Map<String, Map<String, List<String>>> data;
-    private String[] languages;
-    private String basePath;
-
-
-    public void setName(String name) {
+    public Word(String name, String code, Map<String, String> dictionary, Map<String, String> newLanguage) {
         this.name = name;
+        this.code = code;
+        this.dictionary = dictionary;
+        this.newLanguage = newLanguage;
+        this.translations = new HashMap<>();
     }
 
     public String getName() {
         return name;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getCode() {
         return code;
     }
 
-    public void setDictionary(HashMap<String, String> dictionary) {
-        Dictionary = dictionary;
+    public Map<String, String> getDictionary() {
+        return dictionary;
     }
 
-    public HashMap<String, String> getDictionary() {
-        return Dictionary;
-    }
-
-    public void setNewLanguage(HashMap<String, String> newLanguage) {
-        this.newLanguage = newLanguage;
-    }
-
-    public HashMap<String, String> getNewLanguage() {
+    public Map<String, String> getNewLanguage() {
         return newLanguage;
     }
 
-    public Word(){
-        getName();
-        getCode();
-        getDictionary();
-        getNewLanguage();
-    }
-
-    public Word(String name, String code, HashMap<String, String> newLanguage){
-        setName(getName());
-        setCode(getCode());
-        setDictionary(getDictionary());
-        setNewLanguage(getNewLanguage());
-    }
-
-    public void addWord(String word, String translation, String language) {
-        if (!data.containsKey(language)) {
-            data.put(language, new HashMap<>());
+    public void addTranslation(String word, String translation, String language) {
+        Map<String, List<String>> languageTranslations = translations.get(language);
+        if (languageTranslations == null) {
+            languageTranslations = new HashMap<>();
+            translations.put(language, languageTranslations);
         }
-        Map<String, List<String>> wordMap = data.get(language);
-        if (!wordMap.containsKey(word)) {
-            wordMap.put(word, new ArrayList<>());
+        List<String> translationList = languageTranslations.get(word);
+        if (translationList == null) {
+            translationList = new ArrayList<>();
+            languageTranslations.put(word, translationList);
         }
-        List<String> translationList = wordMap.get(word);
         if (!translationList.contains(translation)) {
             translationList.add(translation);
         }
     }
 
-    public void editWord(String oldWord, String newWord, String language) {
-        if (!data.containsKey(language)) {
+    public void editTranslation(String oldWord, String newWord, String language) {
+        Map<String, List<String>> languageTranslations = translations.get(language);
+        if (languageTranslations == null) {
             return;
         }
-        Map<String, List<String>> wordMap = data.get(language);
-        if (!wordMap.containsKey(oldWord)) {
-            return;
-        }
-        List<String> translations = wordMap.remove(oldWord);
-        wordMap.put(newWord, translations);
-    }
-    public void deleteWord(String word) {
-        if (this.getDictionary().containsKey(word)) {
-            this.getDictionary().remove(word);
+        List<String> translations = languageTranslations.remove(oldWord);
+        if (translations != null) {
+            languageTranslations.put(newWord, translations);
         }
     }
 
-    public void findWord(String name){
-        if (getName().contains(name))
-            System.out.println(getName());
+    public void deleteTranslation(String word, String language) {
+        Map<String, List<String>> languageTranslations = translations.get(language);
+        if (languageTranslations != null) {
+            languageTranslations.remove(word);
+        }
+    }
+
+    public List<String> findTranslations(String word, String language) {
+        Map<String, List<String>> languageTranslations = translations.get(language);
+        if (languageTranslations != null) {
+            return languageTranslations.get(word);
+        }
+        return null;
     }
 }

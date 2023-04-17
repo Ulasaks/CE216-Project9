@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+
 public class Translation {
     private String fromLanguage; // the language of the original word
     private String toLanguage; // the language of the translated word
@@ -11,7 +12,7 @@ public class Translation {
     private String[] languages;
     private String basePath;
 
-    public Translation(){}
+    public Translation() {}
 
     public Translation(String[] languages, String basePath) {
         this.languages = languages;
@@ -104,6 +105,7 @@ public class Translation {
         return result;
     }
 
-
-
+    public List<String> getLanguagesList() {
+        return Arrays.asList(languages);
+    }
 }

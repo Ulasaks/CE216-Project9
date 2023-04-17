@@ -1,11 +1,12 @@
-import java.util.*;
+import java.util.HashMap;
 
 public class Language {
 
     private HashMap<String, String> newLanguage;
-    Language language=new Language();
+
     public void findLanguage(String name){
         if (this.newLanguage.containsKey(name))
-            System.out.println(newLanguage);
+            System.out.println(newLanguage.get(name));
     }
 }
+
