@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CE216-Project9.iml" filepath="$PROJECT_DIR$/CE216-Project9.iml" />
-      <module fileurl="file://$PROJECT_DIR$/freedict-eng-tur-0.3.dictd.tar/freedict-eng-tur-0.3.dictd.tar.iml" filepath="$PROJECT_DIR$/freedict-eng-tur-0.3.dictd.tar/freedict-eng-tur-0.3.dictd.tar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/out/freedict-eng-tur-0.3.dictd.tar/freedict-eng-tur-0.3.dictd.tar.iml" filepath="$PROJECT_DIR$/out/freedict-eng-tur-0.3.dictd.tar/freedict-eng-tur-0.3.dictd.tar.iml" />
       <module fileurl="file://$USER_HOME$/Desktop/freedict-tur-deu-0.2.3.dictd.tar/freedict-tur-deu-0.2.3.dictd.tar.iml" filepath="$USER_HOME$/Desktop/freedict-tur-deu-0.2.3.dictd.tar/freedict-tur-deu-0.2.3.dictd.tar.iml" />
     </modules>
   </component>

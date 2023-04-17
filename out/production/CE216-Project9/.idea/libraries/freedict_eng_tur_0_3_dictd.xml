@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="freedict-eng-tur-0.3.dictd">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/freedict-eng-tur-0.3.dictd.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
