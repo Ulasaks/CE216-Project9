@@ -7,8 +7,21 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
     <orderEntry type="library" name="freedict-eng-tur-0.3" level="project" />
     <orderEntry type="library" name="freedict-eng-tur-0.31" level="project" />
     <orderEntry type="library" name="freedict-eng-tur-0.3.dictd" level="project" />
+=======
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/javafx-sdk1.3" />
+        </SOURCES>
+        <jarDirectory url="file://C:/javafx-sdk1.3" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+>>>>>>> c5dd5ad0606a03c25b3092fb96e991af3ae31727
   </component>
 </module>
