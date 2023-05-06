@@ -1,3 +1,6 @@
+
+import java.util.List;
+
 public class Synonym {
     private String word;
     private Language language;

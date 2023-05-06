@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -32,13 +36,13 @@ public class Dictionary {
             }
 
             Scanner sc = new Scanner(System.in);
-            System.out.println("Welcome to dictionary ...");
+            System.out.println("Welcome to the dictionary...");
 
-            System.out.println("Enter a source Language:");
+            System.out.println("Enter the source language:");
             String language1 = sc.nextLine();
-            System.out.println("Enter a target language");
+            System.out.println("Enter the target language:");
             String language2 = sc.nextLine();
-            System.out.println("Enter a word");
+            System.out.println("Enter a word:");
             String word = sc.nextLine();
 
             String translationResult = translateWord(dict, word);
@@ -63,6 +67,33 @@ public class Dictionary {
         return dict;
     }
 
+    private static String sendGetRequest(String url) throws IOException {
+        HttpURLConnection connection = null;
+        BufferedReader reader = null;
+
+        try {
+            URL apiUrl = new URL(url);
+            connection = (HttpURLConnection) apiUrl.openConnection();
+            connection.setRequestMethod("GET");
+
+            StringBuilder response = new StringBuilder();
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+
+            return response.toString();
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
     private static String translateWord(Map<String, String> dict, String word) throws IOException {
         // Check if word is in the loaded dictionary
         String translation = dict.get(word);
@@ -73,7 +104,7 @@ public class Dictionary {
         // If not found in dictionary, use FreeDict API
         String encodedQuery = URLEncoder.encode(word, StandardCharsets.UTF_8.toString());
         String apiUrl = API_URL + encodedQuery;
-        String apiResponse = HttpClient.sendGetRequest(apiUrl);
+        String apiResponse = sendGetRequest(apiUrl);
 
         try {
             JSONArray results = new JSONArray(apiResponse);
@@ -90,4 +121,3 @@ public class Dictionary {
         return null;
     }
 }
-
