@@ -7,10 +7,43 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: org.openjfx:javafx-graphics:win:19" level="project" />
-    <orderEntry type="library" name="json-20230227" level="project" />
-    <orderEntry type="library" name="javafx-sdk1" level="project" />
-    <orderEntry type="library" name="javafx-ui-controls" level="project" />
-    <orderEntry type="library" name="javafx-sdk11" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.openjfx:javafx-graphics:win:19" level="project" />
+    <orderEntry type="library" exported="" name="json-20230227" level="project" />
+    <orderEntry type="library" exported="" name="javafx-sdk1" level="project" />
+    <orderEntry type="library" exported="" name="javafx-ui-controls" level="project" />
+    <orderEntry type="library" exported="" name="javafx-sdk11" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.openjfx:javafx-controls:win:19" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://C:/javafx-sdk1.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://C:/javafx-sdk1.3/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="javafx-base-20.0.1" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/javafx-base-20.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="javafx-sdk12" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://C:/javafx-sdk1.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.openjfx:javafx-base:win:19" level="project" />
   </component>
 </module>

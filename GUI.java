@@ -1,134 +1,100 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import java.util.List;
 
 public class GUI extends Application {
-
     private Dictionary dictionary;
+    private TextField searchInputField;
+    private ListView<Word> searchResultsListView;
 
-    public GUI(Dictionary dictionary) {
-        this.dictionary = dictionary;
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        // Set the title of the window
+    public void start(Stage primaryStage) {
+        dictionary = new Dictionary();
+
         primaryStage.setTitle("Dictionary");
 
-        // Create the search label and text field
-        Label searchLabel = new Label("Search:");
-        TextField searchTextField = new TextField();
-        searchTextField.setPrefWidth(300);
+        GridPane gridPane = createGridPane();
+        addSearchComponents(gridPane);
+        addSearchResultListView(gridPane);
 
-        // Create the search button
-        Button searchButton = new Button("Search");
-        searchButton.setOnAction(e -> searchButtonHandler(searchTextField.getText()));
-
-        // Create the add word button
-        Button addWordButton = new Button("Add Word");
-        addWordButton.setOnAction(e -> showAddWordDialog());
-
-        // Create the search results list view
-        ListView<Word> searchResultsListView = new ListView<>();
-
-        // Create the grid pane to hold the search controls
-        GridPane searchGridPane = new GridPane();
-        searchGridPane.setHgap(10);
-        searchGridPane.setVgap(10);
-        searchGridPane.setPadding(new Insets(10));
-        searchGridPane.add(searchLabel, 0, 0);
-        searchGridPane.add(searchTextField, 1, 0);
-        searchGridPane.add(searchButton, 2, 0);
-        searchGridPane.add(searchResultsListView, 0, 1, 3, 1);
-
-        // Create the main VBox to hold all the controls
-        VBox mainVBox = new VBox();
-        mainVBox.setPadding(new Insets(10));
-        mainVBox.setSpacing(10);
-        mainVBox.setAlignment(Pos.CENTER);
-        mainVBox.getChildren().addAll(searchGridPane, addWordButton);
-
-        // Create the scene
-        Scene scene = new Scene(mainVBox, 500, 500);
-
-        // Set the scene
+        Scene scene = new Scene(gridPane, 400, 400);
         primaryStage.setScene(scene);
-
-        // Show the window
         primaryStage.show();
     }
 
-    private void searchButtonHandler(String searchWord) {
-        List<Word> searchResults = dictionary.searchWord(searchWord);
-        showSearchResults(searchResults);
+    private GridPane createGridPane() {
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(10));
+        gridPane.setVgap(5);
+        gridPane.setHgap(5);
+        return gridPane;
     }
 
-    public void showSearchResults(List<Word> searchResults) {
-        // Get the search results list view
-        ListView<Word> searchResultsListView = (ListView<Word>) ((VBox) ((GridPane) ((ScrollPane) ((VBox) ((Scene) searchResultsListView.getScene()).getRoot()).getChildren().get(0)).getContent()).getChildren().get(0)).getChildren().get(1);
+    private void addSearchComponents(GridPane gridPane) {
+        Label searchLabel = new Label("Search:");
+        GridPane.setConstraints(searchLabel, 0, 0);
 
-        // Clear the search results list view
+        searchInputField = new TextField();
+        GridPane.setConstraints(searchInputField, 1, 0);
+        searchInputField.setPrefWidth(300);
+
+        Button searchButton = new Button("Search");
+        GridPane.setConstraints(searchButton, 2, 0);
+        searchButton.setOnAction(event -> searchWord());
+
+        gridPane.getChildren().addAll(searchLabel, searchInputField, searchButton);
+    }
+
+    private void addSearchResultListView(GridPane gridPane) {
+        searchResultsListView = new ListView<>();
+        GridPane.setConstraints(searchResultsListView, 0, 1, 3, 1);
+        searchResultsListView.setOnMouseClicked(event -> showWordDetails());
+
+        gridPane.getChildren().add(searchResultsListView);
+    }
+
+    private void searchWord() {
+        String query = searchInputField.getText();
+        if (query.isEmpty()) {
+            showAlert("Search Error", "Please enter a word to search.");
+            return;
+        }
+
         searchResultsListView.getItems().clear();
 
-        // Add the search results to the search results list view
-        searchResultsListView.getItems().addAll(searchResults);
+        for (Word word : dictionary.searchWord(query)) {
+            searchResultsListView.getItems().add(word);
+        }
     }
 
-    public void showAddWordDialog() {
-        // Create the add word dialog
-        Dialog<Word> addWordDialog = new Dialog<>();
-        addWordDialog.setTitle("Add Word");
+    private void showWordDetails() {
+        Word selectedWord = searchResultsListView.getSelectionModel().getSelectedItem();
+        if (selectedWord != null) {
+            String details = selectedWord.getDetails();
+            showAlert("Word Details", details);
+        }
+    }
 
-        // Create the add word dialog labels and text fields
-        Label spellingLabel = new Label("Spelling:");
-        TextField spellingTextField = new TextField();
-        Label languageLabel = new Label("Language:");
-        ChoiceBox<Language> languageChoiceBox = new ChoiceBox<>();
-        languageChoiceBox.getItems().addAll(dictionary.getLanguages());
-        languageChoiceBox.setValue(dictionary.getLanguages().get(0));
-        Label translationLabel = new Label("Translation:");
-        TextField translationTextField = new TextField();
-
-        // Create the add word dialog grid pane and add the labels and text fields
-        GridPane addWordGridPane = new GridPane();
-        addWordGridPane.setHgap(10);
-        addWordGridPane.setVgap(10);
-        addWordGridPane.setPadding(new Insets(10));
-        addWordGridPane.add(spellingLabel, 0, 0);
-        addWordGridPane.add(spellingTextField, 1, 0);
-        addWordGridPane.add(languageLabel, 0, 1);
-        addWordGridPane.add(languageChoiceBox, 1, 1);
-        addWordGridPane.add(translationLabel, 0, 2);
-        addWordGridPane.add(translationTextField, 1, 2);
-
-        // Disable the add button until all fields are filled in
-        Node addButtonNode = addWordDialog.getDialogPane().lookupButton(addButton);
-        addButtonNode.setDisable(true);
-        spellingTextField.textProperty().addListener((observable, oldValue, newValue) -> addButtonNode.setDisable(newValue.trim().isEmpty() || translationTextField.getText().trim().isEmpty()));
-
-        // Set the add word dialog content
-        addWordDialog.getDialogPane().setContent(addWordGridPane);
-
-        // Request focus on the spelling text field when the dialog is shown
-        Platform.runLater(spellingTextField::requestFocus);
-
-        // Convert the result to a Word object when the add button is clicked
-        addWordDialog.setResultConverter(dialogButton -> {
-            if (dialogButton == addButton) {
-                Word word = new Word(spellingTextField.getText(), new Translation(languageChoiceBox.getValue(), translationTextField.getText()));
-                dictionary.addWord(word);
-                return word;
-            }
-            return null;
-        });
-
-        // Show the add word dialog
-        addWordDialog.showAndWait();
+    private void showAlert(String title, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(contentText);
+        alert.showAndWait();
     }
 }
+
+
+
+
+
+
+
+
